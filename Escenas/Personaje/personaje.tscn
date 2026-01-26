@@ -28,3 +28,4 @@ sprite_frames = SubResource("SpriteFrames_eumri")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 limit_left = 0
+limit_top = -125
