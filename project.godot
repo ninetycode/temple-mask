@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Temple Mask"
+run/main_scene="uid://dby33jwgvfyiv"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -21,6 +22,14 @@ window/size/viewport_height=360
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "red",
+"res://Escenas/": "purple",
+"res://Recursos/": "yellow"
+}
 
 [layer_names]
 
