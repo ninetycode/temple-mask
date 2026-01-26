@@ -12,6 +12,7 @@ size = Vector2(40, 46)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("1_m7mpd")
+_jump_velocity = -450.0
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 position = Vector2(1, -3.0000038)
@@ -24,3 +25,6 @@ shape = SubResource("RectangleShape2D_t3p4y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_eumri")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+limit_left = 0

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3gsto3wn03ht"]
+
+[ext_resource type="Texture2D" uid="uid://ci07m2im08ttq" path="res://Assets/Enemigos/Enemy01/attack01.png" id="1_alewi"]
+[ext_resource type="Script" uid="uid://knb5yltbpwho" path="res://Escenas/Mobs/murcielago.gd" id="2_77ajb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k2f5n"]
+
+[node name="EnemigoMurcielago" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(60, 41)
+texture = ExtResource("1_alewi")
+script = ExtResource("2_77ajb")
+velocity = null
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("CircleShape2D_k2f5n")
