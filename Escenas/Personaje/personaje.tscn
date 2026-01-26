@@ -1,15 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://ca4q46l24c2sq"]
+[gd_scene load_steps=5 format=3 uid="uid://ca4q46l24c2sq"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eumri"]
+[ext_resource type="Script" uid="uid://8ti7efb6xybq" path="res://Escenas/Personaje/character_body_2d.gd" id="1_m7mpd"]
+[ext_resource type="Texture2D" uid="uid://dqchuvr50cbq7" path="res://icon.svg" id="2_o4m3h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t3p4y"]
+size = Vector2(40, 46)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eumri"]
 
 [node name="Personaje" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_m7mpd")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(1, -3.0000038)
+scale = Vector2(0.328125, 0.3671875)
+texture = ExtResource("2_o4m3h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CapsuleShape2D_eumri")
+position = Vector2(1, -3)
+shape = SubResource("RectangleShape2D_t3p4y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_eumri")

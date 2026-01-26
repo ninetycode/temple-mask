@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnkhatw0cswpm"
-path="res://.godot/imported/cavesofgallet_tiles.png-369821cd50203da1bb9696f2a2040f86.ctex"
+uid="uid://dv4s5qckjq1t5"
+path="res://.godot/imported/dagger03.png-41141b4f4cb81b8cc3287b4641bc9c9f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/TileSets/cavesofgallet_tiles.png"
-dest_files=["res://.godot/imported/cavesofgallet_tiles.png-369821cd50203da1bb9696f2a2040f86.ctex"]
+source_file="res://Assets/Collectible/dagger03.png"
+dest_files=["res://.godot/imported/dagger03.png-41141b4f4cb81b8cc3287b4641bc9c9f.ctex"]
 
 [params]
 
