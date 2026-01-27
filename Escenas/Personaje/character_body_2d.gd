@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var _speed = 300.0
 @export var _jump_velocity = -400.0
-@export var limite_caida := 1000.0   # ← altura límite
+@export var limite_caida := 800.0   # ← altura límite
 
 func _physics_process(delta: float) -> void:
 	# Gravedad
