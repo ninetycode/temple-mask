@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://rosss48yyd35" path="res://Assets/Fondos/Background.png" id="1_rgm5y"]
 [ext_resource type="Texture2D" uid="uid://b2c10dutjq37" path="res://Assets/TileSets/placeholder-floorandwall.png" id="2_bfq8n"]
 [ext_resource type="PackedScene" uid="uid://ca4q46l24c2sq" path="res://Escenas/Personaje/personaje.tscn" id="3_bfq8n"]
+[ext_resource type="PackedScene" uid="uid://dv2cwd1dui1k6" path="res://Escenas/Objetos/cofre.tscn" id="4_dacmr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bfq8n"]
 texture = ExtResource("2_bfq8n")
@@ -46,3 +47,6 @@ position = Vector2(92, 179)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limite Mapa" unique_id=1429519077]
 position = Vector2(-14, 136.5)
 shape = SubResource("RectangleShape2D_bfq8n")
+
+[node name="Area2D" parent="." unique_id=1299927170 instance=ExtResource("4_dacmr")]
+position = Vector2(2704, 178)

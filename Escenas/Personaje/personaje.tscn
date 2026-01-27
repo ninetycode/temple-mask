@@ -8,25 +8,23 @@ size = Vector2(40, 46)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eumri"]
 
-[node name="Personaje" type="Node2D" unique_id=1396306181]
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=284090222]
+[node name="Personaje" type="CharacterBody2D" unique_id=284090222 groups=["player"]]
 script = ExtResource("1_m7mpd")
 _jump_velocity = -450.0
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=956874580]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=956874580]
 position = Vector2(1, -3.0000038)
 scale = Vector2(0.328125, 0.3671875)
 texture = ExtResource("2_o4m3h")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=2049351545]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2049351545]
 position = Vector2(1, -3)
 shape = SubResource("RectangleShape2D_t3p4y")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=266915262]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=266915262]
 sprite_frames = SubResource("SpriteFrames_eumri")
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=533749020]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=533749020]
 offset = Vector2(50, -70)
 limit_left = 0
 limit_top = -125
@@ -34,4 +32,5 @@ position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_left_margin = 0.0
+drag_top_margin = 0.5
 drag_bottom_margin = 0.0
