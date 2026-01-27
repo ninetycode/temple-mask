@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bstjkbr87mupp"]
+
+[ext_resource type="PackedScene" uid="uid://ca4q46l24c2sq" path="res://Escenas/Personaje/personaje.tscn" id="1_j5fu4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5fu4"]
+size = Vector2(549, 41)
+
+[node name="test" type="Node2D" unique_id=296616599]
+
+[node name="Personaje" parent="." unique_id=284090222 instance=ExtResource("1_j5fu4")]
+position = Vector2(153, 223)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1171167563]
+position = Vector2(162, 281)
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=1547633762]
+offset_left = -112.0
+offset_top = 2.0
+offset_right = 438.96997
+offset_bottom = 42.735
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=691746906]
+position = Vector2(162.5, 22.5)
+shape = SubResource("RectangleShape2D_j5fu4")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=229896371]
+position = Vector2(162, 281)
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D2" unique_id=48090209]
+offset_left = -112.0
+offset_top = 2.0
+offset_right = 438.96997
+offset_bottom = 42.735
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1239176383]
+position = Vector2(162.5, 22.5)
+shape = SubResource("RectangleShape2D_j5fu4")
