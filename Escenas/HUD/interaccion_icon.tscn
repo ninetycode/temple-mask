@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://injsfu4yutha"]
+
+[node name="InteraccionIcon" type="Marker2D" unique_id=1730044847]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1761943379]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1226966095]
