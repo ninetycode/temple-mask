@@ -8,7 +8,6 @@ extends Area2D
 # Variables para controlar el estado
 var player_in_range = false
 var is_opened = false
-var current_player = null
 
 
 # Esto te permite definir qué da el cofre desde el Inspector sin tocar código
@@ -31,7 +30,6 @@ func _on_body_entered(body):
 	# Verificamos que sea el jugador (asegurate que tu player esté en el grupo "player")
 	if body.is_in_group("player"):
 		player_in_range = true
-		current_player = body
 		if not is_opened:
 			interaccion_icon.show()
 			
@@ -40,7 +38,6 @@ func _on_body_entered(body):
 func _on_body_exited(body):
 	if body.is_in_group("player"):
 		player_in_range = false
-		current_player = null
 		
 
 func _input(event):
