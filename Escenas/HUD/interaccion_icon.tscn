@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 [gd_scene format=3 uid="uid://injsfu4yutha"]
 
 [ext_resource type="Script" uid="uid://koxh35t8cmuo" path="res://Escenas/HUD/interaccion_icon.gd" id="1_8vfxe"]
@@ -14,3 +15,8 @@ script = ExtResource("1_8vfxe")
 texture = SubResource("AtlasTexture_8vfxe")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1226966095]
+=======
+[gd_scene format=3 uid="uid://dq0q08u5ugwb5"]
+
+[node name="InteraccionIcon" type="Marker2D" unique_id=1730044847]
+>>>>>>> Stashed changes
