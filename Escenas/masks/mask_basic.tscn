@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://wfqsd04suhsm"]
+
+[ext_resource type="Texture2D" uid="uid://dy2q8f2sti2u6" path="res://Assets/Mask/Mascara base.png" id="1_digdb"]
+
+[node name="MaskBasic" type="Sprite2D" unique_id=1680119113]
+texture = ExtResource("1_digdb")

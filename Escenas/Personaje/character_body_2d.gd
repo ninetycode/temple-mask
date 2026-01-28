@@ -1,5 +1,7 @@
 extends CharacterBody2D
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var mask_basic: Sprite2D = $AnimatedSprite2D/MaskBasic
 
 @export var _speed = 300.0
 @export var _jump_velocity = -400.0
@@ -8,6 +10,8 @@ extends CharacterBody2D
 var is_facing_right = true 
 var is_interacting = false
 
+var tiene_mascara = false
+var saltos_realizados = 0
 
 func _physics_process(delta: float) -> void:
 	
@@ -42,8 +46,18 @@ func move_x():
 		
 
 func jump():
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = _jump_velocity
+	# si toca el suelo, tiene 2 saltos
+	if is_on_floor():
+		saltos_realizados = 0
+		
+	if Input.is_action_just_pressed("jump"):
+		if is_on_floor():
+			velocity.y = _jump_velocity
+			saltos_realizados += 1
+		elif tiene_mascara and saltos_realizados < 2:
+			velocity.y = _jump_velocity
+			saltos_realizados += 1
+		
 	
 
 func flip():
@@ -51,9 +65,7 @@ func flip():
 		scale.x *= -1
 		is_facing_right = not is_facing_right
 
-func reiniciar_nivel():
-	get_tree().reload_current_scene()
-	
+
 	
 func update_animatios():
 	if is_interacting:
@@ -69,3 +81,10 @@ func update_animatios():
 	else:
 		animated_sprite_2d.play("idle")
 	
+
+func reiniciar_nivel():
+	get_tree().reload_current_scene()
+	
+func equip_mask():
+	tiene_mascara = true
+	mask_basic.show()
