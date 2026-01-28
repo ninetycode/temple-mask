@@ -48,5 +48,5 @@ position = Vector2(92, 179)
 position = Vector2(-14, 136.5)
 shape = SubResource("RectangleShape2D_bfq8n")
 
-[node name="Area2D" parent="." unique_id=1299927170 instance=ExtResource("4_dacmr")]
-position = Vector2(2704, 178)
+[node name="Cofre" parent="." unique_id=1299927170 instance=ExtResource("4_dacmr")]
+position = Vector2(2777, 178)

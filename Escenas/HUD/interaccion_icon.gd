@@ -1,11 +1,25 @@
 extends Marker2D
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+var is_active = true 
+@onready var area_visible: Area2D = $AreaVisible
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _ready():
+	area_visible.body_entered.connect(_on_body_entered)
+	area_visible.body_exited.connect(on_body_exited)
+func mostrar():
+	show()
+	# Si querés, acá podrías disparar un sonido de "pop"
+	
+	
+func deactivate():
+	is_active = false
+	hide()
+
+func _on_body_entered(body):
+	if body.is_in_group("player") and is_active:
+		show()
+
+func on_body_exited(body):
+	if body.is_in_group("player"):
+		hide()

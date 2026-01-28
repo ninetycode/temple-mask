@@ -2,6 +2,8 @@ extends Area2D
 
 @onready var sprite_cerrado = $Cerrado
 @onready var sprite_abierto = $Abierto
+@onready var interaccion_icon: Marker2D = $InteraccionIcon
+
 
 # Variables para controlar el estado
 var player_in_range = false
@@ -27,10 +29,14 @@ func _on_body_entered(body):
 	# Verificamos que sea el jugador (asegurate que tu player esté en el grupo "player")
 	if body.is_in_group("player"):
 		player_in_range = true
+		if not is_opened:
+			interaccion_icon.show()
+			
 
 func _on_body_exited(body):
 	if body.is_in_group("player"):
 		player_in_range = false
+		
 
 func _input(event):
 	# Si apretás el botón, estás cerca y el cofre no se abrió todavía
@@ -41,6 +47,7 @@ func open_chest():
 	is_opened = true
 	sprite_cerrado.visible = false
 	sprite_abierto.visible = true
+	interaccion_icon.deactivate()
 	
 	print("¡Cofre abierto! Recibiste:")
 	for item in items_to_give:
