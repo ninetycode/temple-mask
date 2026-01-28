@@ -40,6 +40,7 @@ tile_map_data = PackedByteArray("AAAGAAwAAQACAAUAAAAGAA0AAAAAAAAAAAAHAAwAAQADAAU
 tile_set = SubResource("TileSet_dacmr")
 
 [node name="Personaje" parent="." unique_id=3756306 instance=ExtResource("3_bfq8n")]
+z_index = 1
 position = Vector2(92, 179)
 
 [node name="Limite Mapa" type="StaticBody2D" parent="." unique_id=187258159]
