@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://dxsf3ky787ss2" path="res://Escenas/Objetos/cofre.gd" id="1_ijlrw"]
 [ext_resource type="PackedScene" uid="uid://dq0q08u5ugwb5" path="res://Escenas/HUD/interaccion_icon.tscn" id="3_7xbc1"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7xbc1"]
+size = Vector2(30, 28)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ijlrw"]
 atlas = ExtResource("1_5nnxw")
 region = Rect2(287, 275.5, 34, 28)
@@ -12,11 +15,15 @@ region = Rect2(287, 275.5, 34, 28)
 atlas = ExtResource("1_5nnxw")
 region = Rect2(319, 274.5, 33, 29)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7xbc1"]
-size = Vector2(30, 28)
-
 [node name="Cofre" type="Area2D" unique_id=1299927170]
+collision_layer = 16
+collision_mask = 4
 script = ExtResource("1_ijlrw")
+
+[node name="AreaInteractuable" type="CollisionShape2D" parent="." unique_id=1203672661]
+position = Vector2(0, 1)
+scale = Vector2(1.16, 1.16)
+shape = SubResource("RectangleShape2D_7xbc1")
 
 [node name="Cerrado" type="Sprite2D" parent="." unique_id=2002810159]
 texture = SubResource("AtlasTexture_ijlrw")
@@ -25,11 +32,5 @@ texture = SubResource("AtlasTexture_ijlrw")
 visible = false
 texture = SubResource("AtlasTexture_7xbc1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1203672661]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_7xbc1")
-
 [node name="InteraccionIcon" parent="." unique_id=1825451392 instance=ExtResource("3_7xbc1")]
 position = Vector2(0, -29.76)
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemMascara" format=3 uid="uid://b7cbnkdnv4eov"]
+
+[ext_resource type="Texture2D" uid="uid://dy2q8f2sti2u6" path="res://Assets/Mask/Mascara base.png" id="1_22lpd"]
+[ext_resource type="Script" uid="uid://nnfvgiivswr" path="res://items/ItemMascara.gd" id="1_urh7d"]
+
+[resource]
+script = ExtResource("1_urh7d")
+sprite_rostro = ExtResource("1_22lpd")
+saltos_extra = 1
+nombre = "Mascara Basica"
+descripcion = "Una mascara que te permitirá hacer doble salto"
+icono = ExtResource("1_22lpd")
+metadata/_custom_type_script = "uid://nnfvgiivswr"

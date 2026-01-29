@@ -45,7 +45,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8vfxe"]
-size = Vector2(556, 346)
+size = Vector2(372, 321)
 
 [node name="InteraccionIcon" type="Marker2D" unique_id=1825451392]
 script = ExtResource("1_8vfxe")
@@ -60,4 +60,5 @@ autoplay = &"flotar"
 [node name="AreaVisible" type="Area2D" parent="." unique_id=503535057]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaVisible" unique_id=288107249]
+position = Vector2(0, 4.5)
 shape = SubResource("RectangleShape2D_8vfxe")

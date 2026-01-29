@@ -4,61 +4,60 @@ extends Area2D
 @onready var sprite_abierto = $Abierto
 @onready var interaccion_icon: Marker2D = $InteraccionIcon
 
-
-# Variables para controlar el estado
-var player_in_range = false
+# ------- ESTADO -------
+# Cambio clave: Inicializamos en null. Esta variable guardará al NODO del jugador, no un true/false.
+var jugador_actual: Node2D = null 
 var is_opened = false
 
-
-# Esto te permite definir qué da el cofre desde el Inspector sin tocar código
-@export var items_to_give = [
-	{"id": "gold", "amount": 19},
-	{"id": "mask_base", "amount": 1},
-	{"id": "potion_health", "amount": 2}
-]
+# Definimos qué da el cofre desde el Inspector
+@export var contenido: Array[ItemData] = []
 
 func _ready():
-	# Arrancamos con el cofre cerrado
 	sprite_cerrado.visible = true
 	sprite_abierto.visible = false
+	interaccion_icon.visible = false # Aseguramos que arranque oculto
 	
-	# Conectamos las señales (podés hacerlo desde el editor también)
+	# Conectamos señales
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
 func _on_body_entered(body):
-	# Verificamos que sea el jugador (asegurate que tu player esté en el grupo "player")
+	# Verificamos grupo player
 	if body.is_in_group("player"):
-		player_in_range = true
+		jugador_actual = body # <--- GUARDA EL NODO, NO "TRUE"
 		if not is_opened:
 			interaccion_icon.show()
-			
-			
 
 func _on_body_exited(body):
-	if body.is_in_group("player"):
-		player_in_range = false
-		
+	# Si el que sale es el mismo que estaba registrado
+	if body == jugador_actual:
+		jugador_actual = null
+		interaccion_icon.hide()
 
 func _input(event):
-	# Si apretás el botón, estás cerca y el cofre no se abrió todavía
-	if event.is_action_pressed("accept") and player_in_range and not is_opened:
+	# Chequeamos: tecla apretada + jugador existe + cofre cerrado
+	if event.is_action_pressed("accept") and jugador_actual != null and not is_opened:
 		open_chest()
-		
 
 func open_chest():
 	is_opened = true
 	sprite_cerrado.visible = false
 	sprite_abierto.visible = true
-	interaccion_icon.deactivate()
+	interaccion_icon.visible = false # Ocultamos el ícono al abrir
 	
-	print("¡Cofre abierto! Recibiste:")
-	for item in items_to_give:
-		print("- ", item.amount, " de ", item.id)
+	print("Intentando dar items...")
 	
-	# Acá es donde después llamarías a la función de tu inventario
-	# ejemplo: Global.inventory.add_items(items_to_give)
-
-
-func _on_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
+	# --- REFACTORIZACIÓN DE SEGURIDAD ---
+	# 1. Buscamos el inventario UNA SOLA VEZ antes del bucle
+	var inventario_jugador = jugador_actual.get_node_or_null("Inventory")
+	
+	if inventario_jugador:
+		# 2. Si existe, le damos todos los items
+		for item in contenido:
+			inventario_jugador.agregar_item(item)
+			print("Cofre entregó: ", item.nombre)
+	else:
+		print("Error CRÍTICO: El jugador detectado no tiene nodo 'Inventory'")
+	
+	# 3. Vaciamos el cofre lógico
+	contenido.clear()

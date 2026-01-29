@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://ca4q46l24c2sq"]
 
-[ext_resource type="Script" uid="uid://8ti7efb6xybq" path="res://Escenas/Personaje/character_body_2d.gd" id="1_m7mpd"]
+[ext_resource type="Script" uid="uid://8ti7efb6xybq" path="res://Escenas/Personaje/player.gd" id="1_m7mpd"]
+[ext_resource type="Resource" uid="uid://b7cbnkdnv4eov" path="res://items/MascaraBasica.tres" id="2_38xcg"]
 [ext_resource type="Texture2D" uid="uid://mp18yjg00ntq" path="res://Assets/character/16x32 Idle-Sheet.png" id="2_m7mpd"]
 [ext_resource type="Texture2D" uid="uid://birefywy2boi1" path="res://Assets/character/16x32 Interact-Sheet.png" id="3_l5pty"]
 [ext_resource type="Texture2D" uid="uid://yogkcshdaldp" path="res://Assets/character/16x32 Jump-Sheet.png" id="4_7l7hq"]
 [ext_resource type="Texture2D" uid="uid://fb0ex7uvdf83" path="res://Assets/character/16x32 Run-Sheet.png" id="5_r43gt"]
 [ext_resource type="PackedScene" uid="uid://wfqsd04suhsm" path="res://Escenas/masks/mask_basic.tscn" id="6_7l7hq"]
+[ext_resource type="Script" uid="uid://sdn5edec3b41" path="res://Escenas/Personaje/equiment_manager.gd" id="7_r43gt"]
+[ext_resource type="Script" uid="uid://cqqscpl57ohtf" path="res://scripts/Inventory.gd" id="9_2b4s8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_38xcg"]
 atlas = ExtResource("2_m7mpd")
@@ -166,10 +169,18 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t3p4y"]
 size = Vector2(24, 51)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7l7hq"]
+radius = 19.0
+height = 66.0
+
 [node name="Personaje" type="CharacterBody2D" unique_id=284090222 groups=["player"]]
 z_index = 1
+collision_layer = 4
+collision_mask = 27
 script = ExtResource("1_m7mpd")
+mascara_debug = ExtResource("2_38xcg")
 _jump_velocity = -450.0
+max_saltos_base = 1
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=146338948]
@@ -180,21 +191,40 @@ frame_progress = 0.7244428
 
 [node name="MaskBasic" parent="AnimatedSprite2D" unique_id=1680119113 instance=ExtResource("6_7l7hq")]
 visible = false
-position = Vector2(1, -3.0000005)
+position = Vector2(0.03196186, -2.918853)
 rotation = -0.1147307
-scale = Vector2(-0.20205894, 0.15452798)
+scale = Vector2(-0.22905204, 0.1589252)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2049351545]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_t3p4y")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=533749020]
-offset = Vector2(50, -70)
+offset = Vector2(80, -70)
 limit_left = 0
-limit_top = -125
+limit_top = -50
+limit_bottom = 400
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_left_margin = 0.0
 drag_top_margin = 0.5
 drag_bottom_margin = 0.0
+
+[node name="Interactuar" type="Marker2D" parent="." unique_id=1120438816]
+
+[node name="AreaInteractuable" type="Area2D" parent="Interactuar" unique_id=1515291843]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactuar/AreaInteractuable" unique_id=741210293]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_7l7hq")
+debug_color = Color(0.8129681, 0.4076658, 0.10996423, 0.41960785)
+
+[node name="EquimentManager" type="Node" parent="." unique_id=1951779723 node_paths=PackedStringArray("sprite_mascara")]
+script = ExtResource("7_r43gt")
+sprite_mascara = NodePath("../AnimatedSprite2D/MaskBasic")
+
+[node name="Inventory" type="Node" parent="." unique_id=1242124295]
+script = ExtResource("9_2b4s8")

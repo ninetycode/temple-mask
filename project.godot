@@ -32,7 +32,9 @@ window/stretch/mode="canvas_items"
 folder_colors={
 "res://Assets/": "red",
 "res://Escenas/": "purple",
-"res://Recursos/": "yellow"
+"res://Recursos/": "yellow",
+"res://items/": "pink",
+"res://scripts/": "teal"
 }
 
 [global_group]
@@ -94,6 +96,7 @@ power={
 2d_physics/layer_2="Recolectable"
 2d_physics/layer_3="Personaje"
 2d_physics/layer_4="Daño"
+2d_physics/layer_5="Accionables"
 
 [physics]
 
