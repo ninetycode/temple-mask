@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ceh1a2cjhu3mc"]
+
+[ext_resource type="Script" uid="uid://q0mllaa5g6ew" path="res://slot.gd" id="1_ebfft"]
+[ext_resource type="Texture2D" uid="uid://bgikyemtn76d4" path="res://Assets/UI/Inventory2.png" id="2_1fdec"]
+[ext_resource type="Texture2D" uid="uid://7m5tqditqgwe" path="res://Assets/UI/slot.png" id="2_likba"]
+
+[node name="Slot" type="Panel" unique_id=1718879069]
+offset_right = 40.0
+offset_bottom = 40.0
+focus_mode = 2
+script = ExtResource("1_ebfft")
+
+[node name="Icono" type="TextureRect" parent="." unique_id=77748194]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_likba")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Selector" type="TextureRect" parent="." unique_id=890076132]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_1fdec")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dv2cwd1dui1k6" path="res://Escenas/Objetos/cofre.tscn" id="4_dacmr"]
 [ext_resource type="Script" uid="uid://dsj48lgnsldec" path="res://items/ItemData.gd" id="5_xdm0c"]
 [ext_resource type="Resource" uid="uid://b7cbnkdnv4eov" path="res://items/MascaraBasica.tres" id="6_ha4t4"]
+[ext_resource type="PackedScene" uid="uid://ysxy4coxw032" path="res://Escenas/HUD/inventory_ui.tscn" id="7_ha4t4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bfq8n"]
 texture = ExtResource("2_bfq8n")
@@ -53,3 +54,5 @@ shape = SubResource("RectangleShape2D_bfq8n")
 [node name="Cofre" parent="." unique_id=1299927170 instance=ExtResource("4_dacmr")]
 position = Vector2(2777, 178)
 contenido = Array[ExtResource("5_xdm0c")]([ExtResource("6_ha4t4")])
+
+[node name="InventoryUI" parent="." unique_id=397857730 instance=ExtResource("7_ha4t4")]

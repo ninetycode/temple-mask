@@ -6,31 +6,43 @@ class_name Inventory
 signal inventario_actualizado
 signal item_agregado(item: ItemData)
 
-# Acá guardamos los items. Es una lista de nuestros archivos .tres
-@export var items: Array[ItemData] = []
-@export var capacidad: int = 20 # limite del inventario
+# Acá guardamos los items.
+@export var items_mochila: Array[ItemData] = []
+@export var items_mascaras: Array[ItemMascara] = []
+@export var items_equipo: Array[ItemData] = []
 
-func agregar_item(nuevo_item: ItemData) -> bool:
-	# 1. Chequeamos si hay lugar
-	if items.size() >= capacidad:
-		print("¡Inventario lleno! No entra: ", nuevo_item.nombre)
-		return false
+#capacidad de el inventario:
+const CAPACIDAD_MOCHILA = 12
+const CAPACIDAD_MASCARAS = 6
+const CAPACIDAD_EQUIPO = 3
+
+func _ready():
+	items_mochila.resize(CAPACIDAD_MOCHILA)
+	items_mascaras.resize(CAPACIDAD_MASCARAS)
+	items_equipo.resize(CAPACIDAD_EQUIPO)
+
+func agregar_item(item: ItemData) -> bool:
+	if item is ItemMascara:
+		return _agregar_a_array(items_mascaras,item)
+	else:
+		return _agregar_a_array(items_mochila, item)
 	
-	# 2. Agregamos el item a la lista
-	item_agregado.emit(nuevo_item)
-	print("item agrego al inventario:", nuevo_item.nombre)
-	return true
+
+
+func _agregar_a_array(array_destino: Array, item: ItemData) -> bool:
+	for i in range(array_destino.size()):
+		if array_destino[i] == null:
+			array_destino[i] = item
+			
+			# ESTA ES LA SEÑAL PARA LA UI (DIBUJAR)
+			inventario_actualizado.emit() 
+			
+			# --- FALTA ESTA SEÑAL ---
+			# ESTA ES LA SEÑAL PARA EL PLAYER (EQUIPAR)
+			item_agregado.emit(item) 
+			
+			print("Item agregado en slot ", i)
+			return true
 	
-	# 3. Avisamos al mundo (y a la futura UI) que hubo cambios
-	inventario_actualizado.emit()
-	print("Item agregado: ", nuevo_item.nombre) # Debug para ver si anda
-	return true
-
-func remover_item(item: ItemData):
-	if items.has(item):
-		items.erase(item)
-		inventario_actualizado.emit()
-		print("Item removido: ", item.nombre)
-
-func tiene_item(item_buscado: ItemData) -> bool:
-	return items.has(item_buscado)
+	print("¡No hay espacio en esa sección!")
+	return false
