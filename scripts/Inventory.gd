@@ -46,3 +46,35 @@ func _agregar_a_array(array_destino: Array, item: ItemData) -> bool:
 	
 	print("¡No hay espacio en esa sección!")
 	return false
+	
+func intercambiar_items(idx_origen: int, tipo_origen: int, idx_destino: int, tipo_destino: int):
+	var lista_origen = _get_lista_por_tipo(tipo_origen)
+	var lista_destino = _get_lista_por_tipo(tipo_destino)
+	
+	# Validación básica
+	if lista_origen == null or lista_destino == null: return
+	
+	var item1 = lista_origen[idx_origen]
+	var item2 = lista_destino[idx_destino]
+	
+	# REGLA DE JUEGO: Solo máscaras en slots de máscaras
+	# Si intentás mover una poción (mochila) al slot de máscaras (abajo), chequeamos:
+	if tipo_destino == 1 and item1 != null and not (item1 is ItemMascara):
+		print("¡Eso no es una máscara!")
+		return
+	if tipo_origen == 1 and item2 != null and not (item2 is ItemMascara):
+		print("¡No podés poner eso ahí!")
+		return
+
+	# Intercambio
+	lista_origen[idx_origen] = item2
+	lista_destino[idx_destino] = item1
+	
+	print("Items intercambiados")
+
+func _get_lista_por_tipo(tipo: int) -> Array:
+	match tipo:
+		0: return items_mochila
+		1: return items_mascaras
+		2: return items_equipo
+	return []
