@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemEquipo" format=3 uid="uid://bfk0mpsssrrfi"]
+
+[ext_resource type="Script" uid="uid://ctdxtos4qwvno" path="res://items/ItemEquipo.gd" id="1_vjx7r"]
+[ext_resource type="Texture2D" uid="uid://b1d6tt4s6jhsb" path="res://Assets/Accesorios/SODA_Icon_Accessory_Necklace.png" id="1_xot8v"]
+
+[resource]
+script = ExtResource("1_vjx7r")
+vida_bonus = 15
+nombre = "Collar"
+descripcion = "Pequeño collar que te sube la vida"
+icono = ExtResource("1_xot8v")
+metadata/_custom_type_script = "uid://ctdxtos4qwvno"

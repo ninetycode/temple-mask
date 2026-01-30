@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://csomoufq3spmk" path="res://Assets/Fondos/parallax-mountain-trees.png" id="6_op063"]
 [ext_resource type="PackedScene" uid="uid://ysxy4coxw032" path="res://Escenas/HUD/inventory_ui.tscn" id="7_ha4t4"]
 [ext_resource type="Texture2D" uid="uid://bnk4keerpy0tj" path="res://Assets/Fondos/parallax-mountain-foreground-trees.png" id="7_n8gwa"]
+[ext_resource type="Resource" uid="uid://bfk0mpsssrrfi" path="res://items/ItemCollar.tres" id="11_dvgsq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bfq8n"]
 texture = ExtResource("2_bfq8n")
@@ -127,6 +128,6 @@ shape = SubResource("RectangleShape2D_bfq8n")
 
 [node name="Cofre" parent="." unique_id=1299927170 instance=ExtResource("4_dacmr")]
 position = Vector2(2777, 178)
-contenido = Array[ExtResource("5_xdm0c")]([ExtResource("6_ha4t4")])
+contenido = Array[ExtResource("5_xdm0c")]([ExtResource("6_ha4t4"), ExtResource("11_dvgsq")])
 
 [node name="InventoryUI" parent="." unique_id=397857730 instance=ExtResource("7_ha4t4")]

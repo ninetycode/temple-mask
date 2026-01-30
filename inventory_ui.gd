@@ -4,15 +4,23 @@ extends CanvasLayer
 @onready var grid_mochila = $ControlPrincipal/GridMochila
 @onready var row_mascaras = $ControlPrincipal/RowMascaras
 @onready var col_equipo = $ControlPrincipal/ColEquipo
+@onready var menu_contextual: PanelContainer = $MenuContextual
+
 
 var inventario_player: Inventory = null
+
+# --- ESTADOS ---
+enum Estado { NAVEGANDO, MENU_ABIERTO, MOVIENDO_ITEM }
+var estado_actual = Estado.NAVEGANDO
+
 
 # --- VARIABLE PARA MOVER ITEMS ---
 var slot_origen: SlotUI = null # Guarda el slot que seleccionaste primero
 
 func _ready():
 	control_principal.visible = false 
-	# IMPORTANTE: Esperamos un frame para conectar señales si los slots ya existen
+	menu_contextual.visible = false
+	menu_contextual.opcion_seleccionada.connect(_on_menu_accion)
 	call_deferred("conectar_slots")
 
 func conectar_slots():
@@ -48,32 +56,23 @@ func toggle_inventario():
 
 # --- LÓGICA DE INTERCAMBIO ---
 func _on_slot_clicked(slot_tocado: SlotUI):
-	# CASO 1: No tenías nada seleccionado -> SELECCIONAR (Origen)
-	if slot_origen == null:
-		# Solo permitimos seleccionar si hay un item (o si querés mover NADA, sacá el if)
-		if slot_tocado.item_almacenado != null:
-			slot_origen = slot_tocado
-			slot_tocado.modulate = Color(1, 1, 0) # Ponerlo Amarillo (visual)
-			print("Seleccionado: ", slot_tocado.item_almacenado.nombre)
-	
-	# CASO 2: Ya tenías uno seleccionado -> INTERCAMBIAR (Destino)
-	else:
-		# Si tocás el mismo, cancelamos
-		if slot_origen == slot_tocado:
-			slot_origen.modulate = Color(1, 1, 1) # Volver a normal
-			slot_origen = null
-			return
-			
-		# ¡HACEMOS EL CAMBIO EN EL INVENTARIO REAL!
-		inventario_player.intercambiar_items(
-			slot_origen.indice_slot, slot_origen.tipo_coleccion,
-			slot_tocado.indice_slot, slot_tocado.tipo_coleccion
-		)
+	# MAQUINA DE ESTADOS
+	match estado_actual:
 		
-		# Reset visual
-		slot_origen.modulate = Color(1, 1, 1)
-		slot_origen = null
-		actualizar_visuales() # Redibujar todo
+		Estado.NAVEGANDO:
+			# Si tocás un slot vacío, no hacemos nada
+			if slot_tocado.item_almacenado == null: return
+			
+			# Guardamos cuál tocaste
+			slot_origen = slot_tocado
+			
+			# Abrimos menú justo ahí
+			estado_actual = Estado.MENU_ABIERTO
+			menu_contextual.abrir_menu(slot_tocado.global_position + Vector2(20, 20), slot_tocado.tipo_coleccion)
+		
+		Estado.MOVIENDO_ITEM:
+			# Acá aplicamos la lógica de INTERCAMBIO con RESTRICCIONES
+			ejecutar_movimiento(slot_tocado)
 
 func actualizar_visuales():
 	if inventario_player == null:
@@ -95,3 +94,94 @@ func llenar_grid(contenedor, array_datos, tipo_id):
 			if i < contenedor.get_child_count():
 				var slot = contenedor.get_child(i)
 				slot.actualizar_slot(array_datos[i], i, tipo_id)
+				
+func _on_menu_accion(accion: String):
+	match accion:
+		"mover":
+			estado_actual = Estado.MOVIENDO_ITEM
+			slot_origen.modulate = Color(1, 1, 0) # Amarillo (Modo Selección)
+			# Devolvemos el foco al slot para que te puedas mover
+			slot_origen.grab_focus()
+			
+		"equipar":
+			# Lógica automática: Buscar hueco en Equipo y mandar
+			intentrar_auto_equipar(slot_origen)
+			resetear_estado()
+			
+		"desequipar":
+			# Lógica automática: Buscar hueco en Mochila y mandar
+			intentar_auto_desequipar(slot_origen)
+			resetear_estado()
+
+func ejecutar_movimiento(slot_destino: SlotUI):
+	# VALIDACIÓN ESTRICTA (LO QUE PEDISTE)
+	var tipo_origen = slot_origen.tipo_coleccion
+	var tipo_destino = slot_destino.tipo_coleccion
+	
+	var es_valido = false
+	
+	# Regla 1: Máscaras (Tipo 1) SOLO se mueven a Máscaras (Tipo 1)
+	if tipo_origen == 1:
+		if tipo_destino == 1: es_valido = true
+		else: print("¡Las máscaras solo van abajo!")
+	
+	# Regla 2: Equipo (Tipo 2) NO puede recibir Máscaras ni Basura random
+	elif tipo_destino == 2:
+		# Solo entra si el origen es ItemEquipo
+		if slot_origen.item_almacenado is ItemEquipo: es_valido = true
+		else: print("¡Eso no es equipable!")
+		
+	# Regla 3: Mochila (Tipo 0) acepta todo MENOS máscaras (según tu diseño)
+	elif tipo_destino == 0:
+		if not (slot_origen.item_almacenado is ItemMascara): es_valido = true
+		else: print("¡Las máscaras no van a la mochila!")
+
+	# Regla 4: Moverse entre Máscaras
+	if tipo_destino == 1 and not (slot_origen.item_almacenado is ItemMascara):
+		es_valido = false
+		print("¡Solo máscaras ahí abajo!")
+
+	if es_valido:
+		inventario_player.intercambiar_items(
+			slot_origen.indice_slot, tipo_origen,
+			slot_destino.indice_slot, tipo_destino
+		)
+		actualizar_visuales()
+	
+	resetear_estado()
+
+func intentrar_auto_equipar(slot: SlotUI):
+	# Buscamos espacio vacío en la lista de equipos (Tipo 2)
+	var indice_vacio = -1
+	for i in range(inventario_player.items_equipo.size()):
+		if inventario_player.items_equipo[i] == null:
+			indice_vacio = i
+			break
+	
+	if indice_vacio != -1:
+		inventario_player.intercambiar_items(slot.indice_slot, 0, indice_vacio, 2)
+		actualizar_visuales()
+	else:
+		print("¡No tenés espacio para equipar más cosas!")
+
+func intentar_auto_desequipar(slot: SlotUI):
+	# Buscamos espacio en mochila (Tipo 0)
+	var indice_vacio = -1
+	for i in range(inventario_player.items_mochila.size()):
+		if inventario_player.items_mochila[i] == null:
+			indice_vacio = i
+			break
+			
+	if indice_vacio != -1:
+		inventario_player.intercambiar_items(slot.indice_slot, 2, indice_vacio, 0)
+		actualizar_visuales()
+	else:
+		print("¡Mochila llena!")
+
+func resetear_estado():
+	if slot_origen: slot_origen.modulate = Color(1, 1, 1)
+	slot_origen = null
+	estado_actual = Estado.NAVEGANDO
+	# Importante: Si cerraste menú, devolvé foco a algún lado
+	if grid_mochila.get_child_count() > 0:
+		grid_mochila.get_child(0).grab_focus()
