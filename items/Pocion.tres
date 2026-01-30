@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemConsumible" format=3 uid="uid://csru2rljc7v64"]
+
+[ext_resource type="Texture2D" uid="uid://h4mm078bbsrb" path="res://Assets/Accesorios/SODA_Icon_PortionsHerbs_Potion_Red.png" id="1_2dbyk"]
+[ext_resource type="Script" uid="uid://dablajoqtc2ej" path="res://items/ItemConsumible.gd" id="1_52jld"]
+
+[resource]
+script = ExtResource("1_52jld")
+curacion = 50
+nombre = "Pocion"
+descripcion = "Te curará 100 de vida"
+icono = ExtResource("1_2dbyk")
+es_acumulable = true
+metadata/_custom_type_script = "uid://dablajoqtc2ej"

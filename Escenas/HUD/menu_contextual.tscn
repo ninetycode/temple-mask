@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://drnojpvlhjsoh"]
 
-[ext_resource type="Script" uid="uid://oyewf5g7rhlo" path="res://menu_contextual.gd" id="1_vwifb"]
+[ext_resource type="Script" uid="uid://oyewf5g7rhlo" path="res://scripts/menu_contextual.gd" id="1_vwifb"]
 
 [node name="MenuContextual" type="PanelContainer" unique_id=119363778]
 modulate = Color(0.7694515, 0.58945984, 0.4248623, 1)
@@ -15,6 +15,10 @@ layout_mode = 2
 [node name="BtnEquipar" type="Button" parent="VBoxContainer" unique_id=734449364]
 layout_mode = 2
 text = "Equipar"
+
+[node name="BtnUsar" type="Button" parent="VBoxContainer" unique_id=1020440429]
+layout_mode = 2
+text = "Usar"
 
 [node name="BtnMover" type="Button" parent="VBoxContainer" unique_id=1574550266]
 layout_mode = 2

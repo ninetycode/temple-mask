@@ -68,33 +68,40 @@ func _on_slot_clicked(slot_tocado: SlotUI):
 			
 			# Abrimos menú justo ahí
 			estado_actual = Estado.MENU_ABIERTO
-			menu_contextual.abrir_menu(slot_tocado.global_position + Vector2(20, 20), slot_tocado.tipo_coleccion)
+			
+			# --- CORRECCIÓN: Pasamos los 3 argumentos (Posición, Tipo, Item) ---
+			menu_contextual.abrir_menu(
+				slot_tocado.global_position + Vector2(20, 20), 
+				slot_tocado.tipo_coleccion,
+				slot_tocado.item_almacenado # <--- FALTABA ESTE
+			)
 		
 		Estado.MOVIENDO_ITEM:
 			# Acá aplicamos la lógica de INTERCAMBIO con RESTRICCIONES
 			ejecutar_movimiento(slot_tocado)
 
 func actualizar_visuales():
-	if inventario_player == null:
-		var player = get_tree().get_first_node_in_group("player")
-		if player: inventario_player = player.get_node_or_null("Inventory")
-
+	# ... buscar player ...
 	if inventario_player:
-		# 1. Mochila (Tipo 0)
-		llenar_grid(grid_mochila, inventario_player.items_mochila, 0)
-		# 2. Máscaras (Tipo 1)
-		llenar_grid(row_mascaras, inventario_player.items_mascaras, 1)
-		# 3. Equipo (Tipo 2)
-		llenar_grid(col_equipo, inventario_player.items_equipo, 2)
+		# 1. Mochila (Pasamos array de cantidades)
+		llenar_grid(grid_mochila, inventario_player.items_mochila, 0, inventario_player.cantidades_mochila)
+		# 2. Mascaras (No usan cantidades, pasamos null)
+		llenar_grid(row_mascaras, inventario_player.items_mascaras, 1, [])
+		# 3. Equipo
+		llenar_grid(col_equipo, inventario_player.items_equipo, 2, [])
 
-# Función auxiliar para no repetir código
-func llenar_grid(contenedor, array_datos, tipo_id):
+# Modificamos para aceptar cantidades
+func llenar_grid(contenedor, array_datos, tipo_id, array_cantidades: Array):
 	if contenedor:
 		for i in range(array_datos.size()):
 			if i < contenedor.get_child_count():
 				var slot = contenedor.get_child(i)
-				slot.actualizar_slot(array_datos[i], i, tipo_id)
-				
+				var cant = 1
+				if not array_cantidades.is_empty() and i < array_cantidades.size():
+					cant = array_cantidades[i]
+
+				slot.actualizar_slot(array_datos[i], i, tipo_id, cant)
+
 func _on_menu_accion(accion: String):
 	match accion:
 		"mover":
@@ -185,3 +192,18 @@ func resetear_estado():
 	# Importante: Si cerraste menú, devolvé foco a algún lado
 	if grid_mochila.get_child_count() > 0:
 		grid_mochila.get_child(0).grab_focus()
+		
+# En InventoryUI, dentro de _on_menu_accion "usar":
+
+func intentar_usar_consumible(slot: SlotUI):
+	var item = slot.item_almacenado
+	if item is ItemConsumible:
+		# 1. Curar al player
+		var salud = inventario_player.get_parent().get_node("HealthComponent")
+		salud.curar(item.curacion)
+		
+		# 2. Consumir el item (Borrarlo)
+		# Acá necesitás una función en Inventory.gd que borre el item de ese slot específico
+		inventario_player.consumir_item(slot.indice_slot, slot.tipo_coleccion)
+		
+		actualizar_visuales()
