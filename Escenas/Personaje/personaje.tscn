@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://wfqsd04suhsm" path="res://Escenas/masks/mask_basic.tscn" id="6_7l7hq"]
 [ext_resource type="Script" uid="uid://sdn5edec3b41" path="res://Escenas/Personaje/equiment_manager.gd" id="7_r43gt"]
 [ext_resource type="Script" uid="uid://cqqscpl57ohtf" path="res://scripts/Inventory.gd" id="9_2b4s8"]
-[ext_resource type="Script" uid="uid://v5w6llhov0bv" path="res://scripts/HealthComponent.gd" id="10_kwjoo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_38xcg"]
 atlas = ExtResource("2_m7mpd")
@@ -229,7 +228,3 @@ sprite_mascara = NodePath("../AnimatedSprite2D/MaskBasic")
 
 [node name="Inventory" type="Node" parent="." unique_id=1242124295]
 script = ExtResource("9_2b4s8")
-
-[node name="HealthComponent" type="Node" parent="." unique_id=51095]
-script = ExtResource("10_kwjoo")
-salud_base = 152

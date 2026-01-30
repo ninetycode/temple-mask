@@ -17,5 +17,3 @@ class_name ItemMascara
 @export_group("Habilidad Activa")
 # Acá iría la "Bola de fuego". Es una escena que el player instancia al atacar.
 @export var proyectil_activo: PackedScene
-
-@export var vida_bonus : int

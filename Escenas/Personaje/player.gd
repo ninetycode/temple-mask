@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 @onready var inventory: Inventory = $Inventory
 @onready var equiment_manager: Node = $EquimentManager
-@onready var health_component: HealthComponent = $HealthComponent
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @export var mascara_debug : ItemMascara
@@ -36,24 +35,9 @@ func _on_item_agregado_al_inventario(nuevo_item : ItemData):
 
 func recalcular_stats():
 	max_saltos_actuales = max_saltos_base
-	# CALCULO DE VIDA EXTRA
-	var vida_extra_total = 0
-	
-	# 1. Sumar de la máscara
-	if mascara_equipada:
-		# Asumiendo que agregaste 'vida_bonus' a ItemMascara
-		if "vida_bonus" in mascara_equipada: 
-			vida_extra_total += mascara_equipada.vida_bonus
-			
-	# 2. Sumar del equipo (Inventario)
-	# Recorremos los slots de equipo buscando items
-	if inventory:
-		for item in inventory.items_equipo:
-			if item is ItemEquipo:
-				vida_extra_total += item.vida_bonus # Asegurate de tener esta variable en ItemEquipo
-	
-	# Enviamos el total al componente
-	health_component.actualizar_bonus(vida_extra_total)
+	if mascara_equipada != null:
+		max_saltos_actuales += mascara_equipada.saltos_extra
+		#ABAJO HABRIA QUE PONER LOS DISTINTOS STATS POSITIVOS.
 
 func _physics_process(delta: float) -> void:
 	
