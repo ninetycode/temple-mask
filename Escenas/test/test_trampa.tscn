@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cv8pjuoakx7ke"]
+
+[ext_resource type="Script" uid="uid://dpnp4otf71uui" path="res://Escenas/test/test_trampa.gd" id="1_4ywsj"]
+[ext_resource type="Texture2D" uid="uid://47fn7w7ek2pw" path="res://Assets/Enemigos/Enemy01/attack03.png" id="1_f0nue"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ywsj"]
+radius = 11.18034
+
+[node name="test_trampa" type="Area2D" unique_id=1445544233]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_4ywsj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=863627513]
+shape = SubResource("CircleShape2D_4ywsj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=792350196]
+texture = ExtResource("1_f0nue")
