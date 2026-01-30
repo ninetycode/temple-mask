@@ -4,23 +4,15 @@ extends CanvasLayer
 @onready var grid_mochila = $ControlPrincipal/GridMochila
 @onready var row_mascaras = $ControlPrincipal/RowMascaras
 @onready var col_equipo = $ControlPrincipal/ColEquipo
-@onready var menu_contextual: PanelContainer = $MenuContextual
-
 
 var inventario_player: Inventory = null
-
-# --- ESTADOS ---
-enum Estado { NAVEGANDO, MENU_ABIERTO, MOVIENDO_ITEM }
-var estado_actual = Estado.NAVEGANDO
-
 
 # --- VARIABLE PARA MOVER ITEMS ---
 var slot_origen: SlotUI = null # Guarda el slot que seleccionaste primero
 
 func _ready():
 	control_principal.visible = false 
-	menu_contextual.visible = false
-	menu_contextual.opcion_seleccionada.connect(_on_menu_accion)
+	# IMPORTANTE: Esperamos un frame para conectar señales si los slots ya existen
 	call_deferred("conectar_slots")
 
 func conectar_slots():
@@ -56,16 +48,23 @@ func toggle_inventario():
 
 # --- LÓGICA DE INTERCAMBIO ---
 func _on_slot_clicked(slot_tocado: SlotUI):
-	# MAQUINA DE ESTADOS
-	match estado_actual:
-		
-		Estado.NAVEGANDO:
-			# Si tocás un slot vacío, no hacemos nada
-			if slot_tocado.item_almacenado == null: return
-			
-			# Guardamos cuál tocaste
+	# CASO 1: No tenías nada seleccionado -> SELECCIONAR (Origen)
+	if slot_origen == null:
+		# Solo permitimos seleccionar si hay un item (o si querés mover NADA, sacá el if)
+		if slot_tocado.item_almacenado != null:
 			slot_origen = slot_tocado
+			slot_tocado.modulate = Color(1, 1, 0) # Ponerlo Amarillo (visual)
+			print("Seleccionado: ", slot_tocado.item_almacenado.nombre)
+	
+	# CASO 2: Ya tenías uno seleccionado -> INTERCAMBIAR (Destino)
+	else:
+		# Si tocás el mismo, cancelamos
+		if slot_origen == slot_tocado:
+			slot_origen.modulate = Color(1, 1, 1) # Volver a normal
+			slot_origen = null
+			return
 			
+<<<<<<< HEAD:scripts/inventory_ui.gd
 			# Abrimos menú justo ahí
 			estado_actual = Estado.MENU_ABIERTO
 			
@@ -75,10 +74,18 @@ func _on_slot_clicked(slot_tocado: SlotUI):
 				slot_tocado.tipo_coleccion,
 				slot_tocado.item_almacenado # <--- FALTABA ESTE
 			)
+=======
+		# ¡HACEMOS EL CAMBIO EN EL INVENTARIO REAL!
+		inventario_player.intercambiar_items(
+			slot_origen.indice_slot, slot_origen.tipo_coleccion,
+			slot_tocado.indice_slot, slot_tocado.tipo_coleccion
+		)
+>>>>>>> parent of 0d46201 (inventario):inventory_ui.gd
 		
-		Estado.MOVIENDO_ITEM:
-			# Acá aplicamos la lógica de INTERCAMBIO con RESTRICCIONES
-			ejecutar_movimiento(slot_tocado)
+		# Reset visual
+		slot_origen.modulate = Color(1, 1, 1)
+		slot_origen = null
+		actualizar_visuales() # Redibujar todo
 
 func actualizar_visuales():
 	# ... buscar player ...
@@ -96,6 +103,7 @@ func llenar_grid(contenedor, array_datos, tipo_id, array_cantidades: Array):
 		for i in range(array_datos.size()):
 			if i < contenedor.get_child_count():
 				var slot = contenedor.get_child(i)
+<<<<<<< HEAD:scripts/inventory_ui.gd
 				var cant = 1
 				if not array_cantidades.is_empty() and i < array_cantidades.size():
 					cant = array_cantidades[i]
@@ -207,3 +215,6 @@ func intentar_usar_consumible(slot: SlotUI):
 		inventario_player.consumir_item(slot.indice_slot, slot.tipo_coleccion)
 		
 		actualizar_visuales()
+=======
+				slot.actualizar_slot(array_datos[i], i, tipo_id)
+>>>>>>> parent of 0d46201 (inventario):inventory_ui.gd

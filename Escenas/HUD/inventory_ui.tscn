@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c83yfkej01ytu" path="res://scripts/inventory_ui.gd" id="1_5bar6"]
 [ext_resource type="Texture2D" uid="uid://b8gokj70ud2ku" path="res://Assets/UI/Inventory1.png" id="3_mefrt"]
-[ext_resource type="PackedScene" uid="uid://drnojpvlhjsoh" path="res://Escenas/HUD/menu_contextual.tscn" id="4_5bar6"]
 [ext_resource type="PackedScene" uid="uid://ceh1a2cjhu3mc" path="res://Escenas/HUD/slot.tscn" id="4_pmwta"]
 
 [node name="InventoryUI" type="CanvasLayer" unique_id=397857730]
@@ -119,7 +118,3 @@ layout_mode = 2
 
 [node name="Slot3" parent="ControlPrincipal/ColEquipo" unique_id=1932611778 instance=ExtResource("4_pmwta")]
 layout_mode = 2
-
-[node name="MenuContextual" parent="." unique_id=119363778 instance=ExtResource("4_5bar6")]
-modulate = Color(0.76862746, 0.5882353, 0.42352942, 1)
-self_modulate = Color(0.76862746, 0.5882353, 0.42352942, 0)
