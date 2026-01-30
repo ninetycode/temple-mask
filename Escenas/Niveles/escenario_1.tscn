@@ -13,9 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://bnk4keerpy0tj" path="res://Assets/Fondos/parallax-mountain-foreground-trees.png" id="7_n8gwa"]
 [ext_resource type="Resource" uid="uid://bfk0mpsssrrfi" path="res://items/ItemCollar.tres" id="11_dvgsq"]
 <<<<<<< HEAD
+<<<<<<< HEAD
 [ext_resource type="Resource" uid="uid://csru2rljc7v64" path="res://items/Pocion.tres" id="12_op063"]
 [ext_resource type="PackedScene" uid="uid://c6gf3m0wux1sa" path="res://Escenas/HUD/hud.tscn" id="13_dsg7g"]
 [ext_resource type="PackedScene" uid="uid://cv8pjuoakx7ke" path="res://Escenas/test/test_trampa.tscn" id="14_asloh"]
+=======
+>>>>>>> parent of 885b52d (pre vida)
 =======
 >>>>>>> parent of 885b52d (pre vida)
 
@@ -138,10 +141,13 @@ contenido = Array[ExtResource("5_xdm0c")]([ExtResource("6_ha4t4"), ExtResource("
 
 [node name="InventoryUI" parent="." unique_id=397857730 instance=ExtResource("7_ha4t4")]
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 [node name="HUD" parent="." unique_id=178695840 instance=ExtResource("13_dsg7g")]
 
 [node name="test_trampa" parent="." unique_id=1445544233 instance=ExtResource("14_asloh")]
 position = Vector2(572, 174)
+=======
+>>>>>>> parent of 885b52d (pre vida)
 =======
 >>>>>>> parent of 885b52d (pre vida)
